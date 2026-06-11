@@ -1,58 +1,88 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img src="https://raw.githubusercontent.com/JohanPHavenga/nitrodev/main/public/images/nitrodev/brand/nitrodev-navy.png" alt="NitroDev" height="48">
 </p>
 
-## About Laravel
+<h1 align="center">NitroDev — Freelance Web Development & Hosting</h1>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<p align="center">
+  The source code for <a href="https://nitrodev.co.za">nitrodev.co.za</a> — a single-page portfolio site for NitroDev, a Cape Town-based freelance web development and hosting studio.
+</p>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## About
 
-## Learning Laravel
+NitroDev designs, develops and hosts modern websites for South African businesses. This repo is the marketing site: one scrollable page covering services, past work, process and contact details.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Built with **Laravel 12**, **Tailwind CSS v4**, **Alpine.js** and **Vite 8** — hand-coded, no page-builder or template involved.
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Stack
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+| Layer | Technology |
+|---|---|
+| Framework | Laravel 12 (PHP 8.4) |
+| CSS | Tailwind CSS v4 + custom design tokens |
+| JS | Alpine.js v3 (theme toggle, mobile nav) |
+| Build | Vite 8 + laravel-vite-plugin |
+| Hosting | Managed South African hosting |
 
-## Agentic Development
+## Features
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+- Light / dark theme — toggled via Alpine.js store, persisted to `localStorage`, no flash on load
+- Fully responsive — tested at desktop, tablet (980 px) and mobile (560 px)
+- Reveal-on-scroll via `IntersectionObserver` (respects `prefers-reduced-motion`)
+- No database required — all content lives in [`config/site.php`](config/site.php)
+- Blade components for service cards, browser-frame work cards and phone-frame work cards
+
+## Local Development
+
+**Requirements:** PHP 8.4, Composer, Node 22+
 
 ```bash
-composer require laravel/boost --dev
+git clone https://github.com/JohanPHavenga/nitrodev.git
+cd nitrodev
 
-php artisan boost:install
+composer install
+cp .env.example .env
+php artisan key:generate
+
+npm install
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Then in two terminals:
 
-## Contributing
+```bash
+# Terminal 1 — PHP dev server
+php artisan serve
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+# Terminal 2 — Vite HMR
+npm run dev
+```
 
-## Code of Conduct
+Open `http://127.0.0.1:8000`.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+For a production build:
 
-## Security Vulnerabilities
+```bash
+npm run build
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Content
 
-## License
+All copy, services, work samples and process steps are defined in a single file:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```
+config/site.php
+```
+
+No database migrations are needed to run the site.
+
+## Contact
+
+- **Email:** info@nitrodev.co.za
+- **WhatsApp:** [068 623 9340](https://wa.me/27686239340)
+- **Based in:** Cape Town, South Africa
+
+---
+
+© 2026 NitroDev (Pty) Ltd. All rights reserved.
