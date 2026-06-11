@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NitroDev — Freelance Web Development & Hosting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0d2e49;
+    --navy-700:#0a2438;
+    --navy-900:#061a2c;
+    --ink:#0d2e49;
+    --slate:#4d5b69;
+    --muted:#8694a2;
+    --bg:#ffffff;
+    --surface:#f4f7fa;
+    --surface-2:#eaf1f6;
+    --line:#e3eaf1;
+    --line-strong:#d3deea;
+    --accent:#13b6e6;
+    --accent-700:#0c91bb;
+    --accent-soft:#e6f7fc;
+    --display:'Space Grotesk',system-ui,sans-serif;
+    --sans:'Manrope',system-ui,sans-serif;
+    --radius:16px;
+    --shadow-sm:0 1px 2px rgba(13,46,73,.05),0 4px 14px -8px rgba(13,46,73,.12);
+    --shadow:0 18px 50px -28px rgba(13,46,73,.45);
+    --card:#ffffff;
+    --card-bar:#fbfdff;
+    --header-bg:rgba(255,255,255,.82);
+    --link:var(--navy);
+  }
+  [data-theme="dark"]{
+    --ink:#e9f1f8;
+    --slate:#aebfce;
+    --muted:#7d92a5;
+    --bg:#0b1826;
+    --surface:#0f2132;
+    --surface-2:#15293c;
+    --line:#21384c;
+    --line-strong:#2d465c;
+    --accent-700:#3cc6ef;
+    --accent-soft:rgba(19,182,230,.16);
+    --card:#13263a;
+    --card-bar:#0f2132;
+    --header-bg:rgba(11,24,38,.85);
+    --link:#3cc6ef;
+    --navy:#16395a;
+    --navy-700:#10324f;
+    --navy-900:#0a1a2b;
+    --shadow:0 18px 50px -26px rgba(0,0,0,.6);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--sans);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.6;transition:background .3s ease,color .3s ease}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+  h1,h2,h3,h4{font-family:var(--display);font-weight:700;letter-spacing:-.02em;line-height:1.05;color:var(--ink)}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+  .eyebrow{font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-700)}
+  .bolt{display:inline-block;width:.62em;height:1em;background:currentColor;vertical-align:-.06em;
+    -webkit-clip-path:polygon(58% 0,0 58%,40% 58%,30% 100%,100% 38%,55% 38%);
+    clip-path:polygon(58% 0,0 58%,40% 58%,30% 100%,100% 38%,55% 38%)}
+
+  /* ---------- Header ---------- */
+  header{position:sticky;top:0;z-index:50;background:var(--header-bg);backdrop-filter:saturate(140%) blur(12px);border-bottom:1px solid transparent;transition:border-color .25s,box-shadow .25s,background .3s}
+  header.scrolled{border-color:var(--line);box-shadow:0 6px 24px -20px rgba(13,46,73,.5)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:74px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand img{height:30px;width:auto}
+  .brand .logo-dark{display:none}
+  [data-theme="dark"] .brand .logo-light{display:none}
+  [data-theme="dark"] .brand .logo-dark{display:block}
+  .navlinks{display:flex;align-items:center;gap:34px}
+  .navlinks a{font-size:14.5px;font-weight:600;color:var(--slate);transition:color .15s}
+  .navlinks a:hover{color:var(--ink)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-family:var(--sans);font-weight:700;font-size:14.5px;
+    padding:12px 22px;border-radius:999px;cursor:pointer;border:1.5px solid transparent;transition:transform .15s,background .2s,box-shadow .2s,border-color .2s;white-space:nowrap}
+  .btn-primary{background:var(--navy);color:#fff}
+  .btn-primary:hover{background:var(--navy-700);transform:translateY(-1px);box-shadow:0 14px 28px -14px rgba(13,46,73,.7)}
+  .btn-accent{background:var(--accent);color:#04222e}
+  .btn-accent:hover{background:var(--accent-700);color:#fff;transform:translateY(-1px);box-shadow:0 14px 30px -14px rgba(19,182,230,.8)}
+  .btn-ghost{background:transparent;color:var(--ink);border-color:var(--line-strong)}
+  .btn-ghost:hover{border-color:var(--navy);background:var(--card)}
+  .navlinks .btn{padding:11px 20px}
+  .nav-actions{display:flex;align-items:center;gap:10px}
+  .theme-toggle{display:inline-grid;place-items:center;width:42px;height:42px;border-radius:11px;border:1.5px solid var(--line-strong);background:var(--card);color:var(--ink);cursor:pointer;transition:border-color .15s,background .2s,color .2s}
+  .theme-toggle:hover{border-color:var(--accent-700);color:var(--accent-700)}
+  .theme-toggle .i-sun{display:none}
+  [data-theme="dark"] .theme-toggle .i-sun{display:block}
+  [data-theme="dark"] .theme-toggle .i-moon{display:none}
+  .menu-toggle{display:none;color:var(--ink)}
+
+  /* ---------- Hero ---------- */
+  .hero{position:relative;overflow:hidden}
+  .hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;padding-top:74px;padding-bottom:88px}
+  .hero-copy .eyebrow{display:inline-flex;align-items:center;gap:8px}
+  .hero h1{font-size:clamp(40px,5.2vw,68px);margin:20px 0 22px}
+  .hero h1 .hl{color:var(--accent-700)}
+  .hero p.lead{font-size:19px;color:var(--slate);max-width:30em;margin-bottom:32px}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+  .trust{display:flex;gap:28px;margin-top:40px;flex-wrap:wrap}
+  .trust .item .n{font-family:var(--display);font-size:30px;font-weight:700;color:var(--ink);line-height:1}
+  .trust .item .l{font-size:13px;color:var(--muted);margin-top:5px;font-weight:600}
+
+  /* hero visual: stacked browser + code energy */
+  .hero-visual{position:relative;height:100%;min-height:420px}
+  .hero-card{position:absolute;background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
+  .hv-main{inset:8% 0 8% 6%;left:6%;right:8%;top:6%;bottom:6%}
+  .browser-bar{height:42px;display:flex;align-items:center;gap:7px;padding:0 16px;background:var(--card-bar);border-bottom:1px solid var(--line)}
+  .browser-bar .dot{width:11px;height:11px;border-radius:50%}
+  .browser-bar .url{margin-left:14px;flex:1;height:24px;border-radius:7px;background:var(--surface-2);display:flex;align-items:center;padding:0 12px;font-size:11.5px;color:var(--muted);font-weight:600}
+  .hv-main .shot{height:calc(100% - 42px);object-fit:cover;object-position:top;width:100%}
+  .hero-badge{position:absolute;z-index:3;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:14px 18px;display:flex;align-items:center;gap:12px}
+  .hero-badge .ic{width:38px;height:38px;border-radius:10px;background:var(--accent-soft);color:var(--accent-700);display:grid;place-items:center}
+  .hero-badge .t{font-size:13px;font-weight:700;color:var(--ink);line-height:1.25}
+  .hero-badge .s{font-size:11.5px;color:var(--muted);font-weight:600}
+  .badge-uptime{bottom:2%;left:0}
+  .badge-speed{top:0;right:2%}
+  .hero-grid-bg{position:absolute;inset:0;z-index:-1;background-image:radial-gradient(var(--line-strong) 1px,transparent 1px);background-size:26px 26px;-webkit-mask-image:radial-gradient(ellipse 70% 70% at 60% 40%,#000,transparent);mask-image:radial-gradient(ellipse 70% 70% at 60% 40%,#000,transparent);opacity:.55}
+
+  /* ---------- Marquee / clients strip ---------- */
+  .strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--surface)}
+  .strip .wrap{display:flex;align-items:center;gap:32px;padding:22px 32px;flex-wrap:wrap;justify-content:center}
+  .strip .lbl{font-size:12.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .strip .names{display:flex;gap:30px;flex-wrap:wrap;justify-content:center}
+  .strip .names span{font-family:var(--display);font-size:18px;font-weight:600;color:var(--ink);opacity:.55}
+
+  /* ---------- Section scaffolding ---------- */
+  section{scroll-margin-top:90px}
+  .band{padding:96px 0}
+  .band.surface{background:var(--surface)}
+  .sec-head{max-width:640px;margin-bottom:54px}
+  .sec-head.center{margin-left:auto;margin-right:auto;text-align:center}
+  .sec-head h2{font-size:clamp(30px,3.6vw,44px);margin:14px 0 16px}
+  .sec-head p{font-size:17.5px;color:var(--slate)}
+
+  /* ---------- Services ---------- */
+  .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .svc{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:32px 30px;transition:transform .2s,box-shadow .2s,border-color .2s}
+  .svc:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:var(--line-strong)}
+  .svc .ic{width:52px;height:52px;border-radius:13px;background:var(--navy);color:#fff;display:grid;place-items:center;margin-bottom:22px}
+  .svc h3{font-size:21px;margin-bottom:10px}
+  .svc p{font-size:15px;color:var(--slate);margin-bottom:18px}
+  .svc ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+  .svc li{font-size:14px;color:var(--slate);display:flex;align-items:flex-start;gap:10px;font-weight:500}
+  .svc li::before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:var(--accent);margin-top:7px}
+
+  /* ---------- Work ---------- */
+  .work-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px}
+  .work{background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;transition:transform .22s,box-shadow .22s,border-color .22s}
+  .work:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:var(--line-strong)}
+  .work .frame{position:relative;background:var(--surface-2);padding:22px 22px 0;height:288px;overflow:hidden}
+  .mini-browser{background:var(--card);border:1px solid var(--line);border-radius:12px 12px 0 0;box-shadow:0 20px 40px -26px rgba(13,46,73,.55);overflow:hidden;height:100%}
+  .mini-browser .bar{height:34px;display:flex;align-items:center;gap:6px;padding:0 13px;background:var(--card-bar);border-bottom:1px solid var(--line)}
+  .mini-browser .bar .dot{width:9px;height:9px;border-radius:50%}
+  .mini-browser .bar .url{margin-left:10px;flex:1;height:19px;border-radius:6px;background:var(--surface-2);font-size:10.5px;color:var(--muted);font-weight:600;display:flex;align-items:center;padding:0 10px;overflow:hidden;white-space:nowrap}
+  .mini-browser .shot{width:100%;height:calc(100% - 34px);object-fit:cover;object-position:top;transition:object-position 2.6s ease}
+  .work:hover .mini-browser .shot{object-position:bottom}
+  .work .body{padding:24px 26px 26px;display:flex;flex-direction:column;flex:1}
+  .work .cat{font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-700);margin-bottom:8px}
+  .work h3{font-size:23px;margin-bottom:10px}
+  .work p{font-size:14.5px;color:var(--slate);margin-bottom:18px;flex:1}
+  .work .tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+  .work .tags span{font-size:12px;font-weight:600;color:var(--slate);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px 12px}
+  .work .visit{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:14px;color:var(--link)}
+  .work .visit svg{transition:transform .18s}
+  .work:hover .visit svg{transform:translate(3px,-3px)}
+
+  /* phone frame for TightFit */
+  .work.phone .frame{display:flex;justify-content:center;align-items:flex-end;background:linear-gradient(160deg,#13324f,#0a2438);padding-bottom:0}
+  .phone-shell{position:relative;width:188px;height:264px;background:#0b1c2c;border-radius:30px 30px 0 0;padding:9px 9px 0;box-shadow:0 30px 60px -30px rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.08)}
+  .phone-shell::before{content:"";position:absolute;top:15px;left:50%;transform:translateX(-50%);width:54px;height:5px;border-radius:3px;background:rgba(255,255,255,.25);z-index:4}
+  .phone-shell .phone-shot{width:100%;height:100%;object-fit:cover;object-position:top;border-radius:22px 22px 0 0;display:block}
+
+  /* ---------- Process ---------- */
+  .proc{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+  .proc .step{position:relative;padding-top:30px}
+  .proc .num{font-family:var(--display);font-size:14px;font-weight:700;color:var(--accent-700);letter-spacing:.04em}
+  .proc .step::before{content:"";position:absolute;top:7px;left:0;width:34px;height:3px;border-radius:2px;background:var(--accent)}
+  .proc h3{font-size:19px;margin:12px 0 8px}
+  .proc p{font-size:14.5px;color:var(--slate)}
+
+  /* ---------- Contact / CTA ---------- */
+  .cta{background:var(--navy);color:#fff;position:relative;overflow:hidden}
+  .cta .grid-bg{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.09) 1px,transparent 1px);background-size:28px 28px;-webkit-mask-image:radial-gradient(ellipse 60% 80% at 80% 20%,#000,transparent);mask-image:radial-gradient(ellipse 60% 80% at 80% 20%,#000,transparent)}
+  .cta .wrap{position:relative;display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center;padding:88px 32px}
+  .cta .eyebrow{color:var(--accent)}
+  .cta h2{color:#fff;font-size:clamp(32px,4vw,48px);margin:14px 0 18px}
+  .cta p{color:#c4d3e0;font-size:18px;max-width:30em;margin-bottom:30px}
+  .cta-actions{display:flex;gap:14px;flex-wrap:wrap}
+  .contact-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:20px;padding:30px}
+  .contact-card .row{display:flex;align-items:center;gap:15px;padding:15px 0;border-bottom:1px solid rgba(255,255,255,.1)}
+  .contact-card .row:last-child{border-bottom:0}
+  .contact-card .ic{width:42px;height:42px;border-radius:11px;background:rgba(19,182,230,.18);color:var(--accent);display:grid;place-items:center;flex:none}
+  .contact-card .k{font-size:12px;color:#8fa6b8;font-weight:600;text-transform:uppercase;letter-spacing:.08em}
+  .contact-card .v{font-size:16px;color:#fff;font-weight:600}
+
+  /* ---------- Footer ---------- */
+  footer.site{background:var(--navy-900);color:#9fb2c2;padding:54px 0 36px}
+  footer.site .wrap{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap}
+  footer.site img{height:42px}
+  footer.site .foot-brand{display:flex;align-items:center;gap:18px}
+  footer.site .tagline{font-size:14px;margin:0;max-width:17em;color:#7e93a5;border-left:1px solid rgba(255,255,255,.16);padding-left:18px}
+  footer.site .fnav{display:flex;gap:48px;flex-wrap:wrap}
+  footer.site .fcol h4{color:#fff;font-size:13px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;font-family:var(--sans);font-weight:700}
+  footer.site .fcol a{display:block;font-size:14px;color:#9fb2c2;padding:5px 0;transition:color .15s}
+  footer.site .fcol a:hover{color:var(--accent)}
+  .copy{border-top:1px solid rgba(255,255,255,.08);margin-top:40px;padding-top:24px;font-size:13px;color:#6b8095;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+  .copy .copy-left{display:flex;flex-direction:column;gap:4px}
+  .copy .legal{color:#5a7088;font-size:12.5px}
+
+  /* ---------- Reveal ---------- */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+  /* ---------- Responsive ---------- */
+  @media(max-width:980px){
+    .hero .wrap{grid-template-columns:1fr;gap:40px;padding-bottom:64px}
+    .hero-visual{min-height:360px}
+    .svc-grid{grid-template-columns:1fr;max-width:480px;margin:0 auto}
+    .work-grid{grid-template-columns:1fr;max-width:520px;margin:0 auto}
+    .proc{grid-template-columns:repeat(2,1fr)}
+    .cta .wrap{grid-template-columns:1fr;gap:36px}
+    .navlinks{display:none}
+    .navlinks.open{display:flex;position:absolute;top:74px;left:0;right:0;flex-direction:column;background:var(--card);border-bottom:1px solid var(--line);padding:18px 32px 26px;gap:16px;align-items:stretch;box-shadow:var(--shadow)}
+    .menu-toggle{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:11px;border:1.5px solid var(--line-strong);background:var(--card);cursor:pointer}
+  }
+  @media(max-width:560px){
+    .wrap{padding:0 20px}
+    .band{padding:64px 0}
+    .proc{grid-template-columns:1fr}
+    .trust{gap:22px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header id="hdr">
+  <div class="wrap nav">
+    <a href="#top" class="brand" aria-label="NitroDev home">
+      <img class="logo-light" src="assets/brand/nitrodev-navy.png" alt="NitroDev">
+      <img class="logo-dark" src="assets/brand/nitrodev-white.png" alt="NitroDev">
+    </a>
+    <nav class="navlinks" id="navlinks">
+      <a href="#services">Services</a>
+      <a href="#work">Work</a>
+      <a href="#process">Process</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <svg class="i-moon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="i-sun" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </button>
+      <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="hero-grid-bg"></div>
+  <div class="wrap">
+    <div class="hero-copy reveal">
+      <span class="eyebrow"><i class="bolt"></i>Freelance Web Development &amp; Hosting</span>
+      <h1>Fast, reliable websites — <span class="hl">built &amp; hosted</span>, end to end.</h1>
+      <p class="lead">NitroDev designs, develops and hosts modern websites for South African businesses. One partner from first sketch to live site — and we keep it running.</p>
+      <div class="hero-cta">
+        <a href="#contact" class="btn btn-accent"><i class="bolt"></i>Get a free quote</a>
+        <a href="#work" class="btn btn-ghost">View recent work</a>
+      </div>
+      <div class="trust">
+        <div class="item"><div class="n">25+</div><div class="l">Sites launched</div></div>
+        <div class="item"><div class="n">99.9%</div><div class="l">Hosting uptime</div></div>
+        <div class="item"><div class="n">15 yrs</div><div class="l">Building for the web</div></div>
+      </div>
+    </div>
+    <div class="hero-visual reveal">
+      <div class="hero-card hv-main">
+        <div class="browser-bar">
+          <span class="dot" style="background:#ff5f57"></span>
+          <span class="dot" style="background:#febc2e"></span>
+          <span class="dot" style="background:#28c840"></span>
+          <span class="url">harmonieprop.co.za</span>
+        </div>
+        <img class="shot" src="assets/harmonie.jpg" alt="Harmonie Properties website">
+      </div>
+      <div class="hero-badge badge-speed">
+        <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg></div>
+        <div><div class="t">100 / 100</div><div class="s">PageSpeed score</div></div>
+      </div>
+      <div class="hero-badge badge-uptime">
+        <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+        <div><div class="t">Always online</div><div class="s">Managed hosting &amp; backups</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CLIENT STRIP ============ -->
+<div class="strip">
+  <div class="wrap">
+    <span class="lbl">Trusted to build &amp; host</span>
+    <div class="names">
+      <span>Harmonie</span>
+      <span>RunningCalendar</span>
+      <span>Uitsig Kleuterskool</span>
+      <span>TightFit</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SERVICES ============ -->
+<section class="band" id="services">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow"><i class="bolt"></i>What we do</span>
+      <h2>Everything your site needs, under one roof.</h2>
+      <p>Design, build and hosting handled by one developer who answers the phone. No agencies, no hand-offs, no surprises.</p>
+    </div>
+    <div class="svc-grid">
+      <div class="svc reveal">
+        <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+        <h3>Web Development</h3>
+        <p>Custom, hand-coded websites that are fast, responsive and easy to manage — built to fit your business, not a template.</p>
+        <ul>
+          <li>Business &amp; brochure sites</li>
+          <li>Custom CMS so you can self-update</li>
+          <li>Web apps &amp; directories</li>
+        </ul>
+      </div>
+      <div class="svc reveal">
+        <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg></div>
+        <h3>Hosting &amp; Maintenance</h3>
+        <p>Reliable South African-friendly hosting with SSL, daily backups and monitoring — so your site stays fast and online.</p>
+        <ul>
+          <li>Managed hosting &amp; domains</li>
+          <li>SSL, backups &amp; uptime monitoring</li>
+          <li>Updates, fixes &amp; support</li>
+        </ul>
+      </div>
+      <div class="svc reveal">
+        <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M6 8h.01M10 8h4"/></svg></div>
+        <h3>Design &amp; Redesign</h3>
+        <p>Clean, modern, mobile-first design — or a fresh redesign that turns a dated site into one that earns trust.</p>
+        <ul>
+          <li>Mobile-first responsive design</li>
+          <li>Brand-aligned UI &amp; layout</li>
+          <li>Performance &amp; SEO basics</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WORK ============ -->
+<section class="band surface" id="work">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow"><i class="bolt"></i>Selected work</span>
+      <h2>Live sites, built &amp; hosted by NitroDev.</h2>
+      <p>A few recent projects — each designed, developed and kept online by us.</p>
+    </div>
+    <div class="work-grid">
+
+      <article class="work reveal">
+        <div class="frame">
+          <div class="mini-browser">
+            <div class="bar"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span><span class="url">harmonieprop.co.za</span></div>
+            <img class="shot" src="assets/harmonie.jpg" alt="Harmonie Rental Properties">
+          </div>
+        </div>
+        <div class="body">
+          <div class="cat">Property · Custom CMS</div>
+          <h3>Harmonie Rental Properties</h3>
+          <p>A holiday-rental site for Hermanus with a custom backend CMS so the owner can add and update listings themselves.</p>
+          <div class="tags"><span>Web development</span><span>CMS</span><span>Hosting</span></div>
+          <a class="visit" href="https://harmonieprop.co.za" target="_blank" rel="noopener">Visit live site
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+        </div>
+      </article>
+
+      <article class="work reveal">
+        <div class="frame">
+          <div class="mini-browser">
+            <div class="bar"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span><span class="url">runningcalendar.co.za</span></div>
+            <img class="shot" src="assets/runningcalendar.jpg" alt="Running Calendar">
+          </div>
+        </div>
+        <div class="body">
+          <div class="cat">Directory · Web app</div>
+          <h3>Running Calendar</h3>
+          <p>A verified directory of every road race in Southern Africa — searchable, filterable and updated weekly across nine provinces.</p>
+          <div class="tags"><span>Web app</span><span>Search</span><span>Hosting</span></div>
+          <a class="visit" href="https://runningcalendar.co.za" target="_blank" rel="noopener">Visit live site
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+        </div>
+      </article>
+
+      <article class="work reveal">
+        <div class="frame">
+          <div class="mini-browser">
+            <div class="bar"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span><span class="url">uitsigkleuterskool.co.za</span></div>
+            <img class="shot" src="assets/uitsig.jpg" alt="Uitsig Kleuterskool">
+          </div>
+        </div>
+        <div class="body">
+          <div class="cat">Education · Web design</div>
+          <h3>Uitsig Kleuterskool</h3>
+          <p>A dated pre-school site rebuilt into a modern, mobile-friendly one-page design with smooth in-page navigation.</p>
+          <div class="tags"><span>Redesign</span><span>One-page</span><span>Mobile-first</span></div>
+          <a class="visit" href="https://uitsigkleuterskool.co.za" target="_blank" rel="noopener">Visit live site
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+        </div>
+      </article>
+
+      <article class="work phone reveal">
+        <div class="frame">
+          <div class="phone-shell">
+            <img class="phone-shot" src="assets/tightfit-mobile.png" alt="TightFit garage doors mobile site">
+          </div>
+        </div>
+        <div class="body">
+          <div class="cat">Garage Doors · Mobile-first</div>
+          <h3>TightFit</h3>
+          <p>A mobile-first site for a Hermanus garage-door &amp; automation specialist — built to look and load great in the hand, where most of their visitors land.</p>
+          <div class="tags"><span>Mobile-first</span><span>Web design</span><span>Hosting</span></div>
+          <a class="visit" href="https://tightfit.co.za" target="_blank" rel="noopener">Visit live site
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROCESS ============ -->
+<section class="band" id="process">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow"><i class="bolt"></i>How it works</span>
+      <h2>A simple, no-jargon process.</h2>
+      <p>From first conversation to a live, looked-after website — here's how we get there.</p>
+    </div>
+    <div class="proc">
+      <div class="step reveal"><div class="num">01</div><h3>Chat &amp; plan</h3><p>We talk through your goals, pages and budget, then agree a clear scope and quote.</p></div>
+      <div class="step reveal"><div class="num">02</div><h3>Design</h3><p>A clean, mobile-first design mapped to your brand — reviewed before a line of code.</p></div>
+      <div class="step reveal"><div class="num">03</div><h3>Build &amp; launch</h3><p>Hand-coded, tested and deployed to fast managed hosting with SSL and backups.</p></div>
+      <div class="step reveal"><div class="num">04</div><h3>Host &amp; support</h3><p>We keep it online, updated and monitored — one number to call when you need a change.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT / CTA ============ -->
+<section class="cta" id="contact">
+  <div class="grid-bg"></div>
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow"><i class="bolt"></i>Let's build it</span>
+      <h2>Need a website that's fast, modern and looked after?</h2>
+      <p>Tell us a little about your project and we'll come back with a clear plan and a fair quote — usually within a day.</p>
+      <div class="cta-actions">
+        <a href="mailto:info@nitrodev.co.za" class="btn btn-accent"><i class="bolt"></i>Get a free quote</a>
+        <a href="https://wa.me/27686239340" target="_blank" rel="noopener" class="btn btn-ghost" style="color:#fff;border-color:rgba(255,255,255,.3)">WhatsApp us</a>
+      </div>
+    </div>
+    <div class="contact-card reveal">
+      <div class="row">
+        <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg></div>
+        <div><div class="k">Email</div><div class="v">info@nitrodev.co.za</div></div>
+      </div>
+      <div class="row">
+        <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+        <div><div class="k">Phone &amp; WhatsApp</div><div class="v">068 623 9340</div></div>
+      </div>
+      <div class="row">
+        <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div><div class="k">Based in</div><div class="v">Cape Town, South Africa</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-brand">
+      <img src="assets/brand/nitrodev-white.png" alt="NitroDev">
+      <p class="tagline">Freelance web development &amp; hosting. Built fast, kept online.</p>
+    </div>
+    <div class="fnav">
+      <div class="fcol">
+        <h4>Services</h4>
+        <a href="#services">Web Development</a>
+        <a href="#services">Hosting &amp; Maintenance</a>
+        <a href="#services">Design &amp; Redesign</a>
+      </div>
+      <div class="fcol">
+        <h4>Company</h4>
+        <a href="#work">Work</a>
+        <a href="#process">Process</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="fcol">
+        <h4>Get in touch</h4>
+        <a href="mailto:info@nitrodev.co.za">info@nitrodev.co.za</a>
+        <a href="https://wa.me/27686239340" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+  <div class="wrap copy">
+    <div class="copy-left">
+      <span>© 2026 NitroDev. All rights reserved.</span>
+      <span class="legal">NitroDev (Pty) Ltd</span>
+    </div>
+    <span>People-powered web, built in Cape Town.</span>
+  </div>
+</footer>
+
+<script>
+  // header shadow on scroll
+  const hdr=document.getElementById('hdr');
+  const onScroll=()=>hdr.classList.toggle('scrolled',window.scrollY>8);
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+  // theme toggle (persisted)
+  const root=document.documentElement, tt=document.getElementById('themeToggle');
+  if(localStorage.getItem('nitrodev-theme')==='dark') root.setAttribute('data-theme','dark');
+  tt.addEventListener('click',()=>{
+    const dark=root.getAttribute('data-theme')==='dark';
+    if(dark){root.removeAttribute('data-theme');localStorage.setItem('nitrodev-theme','light');}
+    else{root.setAttribute('data-theme','dark');localStorage.setItem('nitrodev-theme','dark');}
+  });
+
+  // mobile menu
+  const tg=document.getElementById('menuToggle'),nl=document.getElementById('navlinks');
+  tg.addEventListener('click',()=>nl.classList.toggle('open'));
+  nl.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nl.classList.remove('open')));
+
+  // reveal on scroll
+  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.14});
+  document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%3*60)+'ms';io.observe(el);});
+</script>
+</body>
+</html>
