@@ -145,7 +145,7 @@
 {{-- ============ CONTACT / CTA ============ --}}
 <section id="contact" style="background:var(--navy);color:#fff;position:relative;overflow:hidden;scroll-margin-top:90px;">
   <div class="cta-grid-bg" aria-hidden="true"></div>
-  <div class="cta-grid wrap-pad" style="position:relative;max-width:1200px;margin:0 auto;padding-top:88px;padding-bottom:88px;padding-left:32px;padding-right:32px;">
+  <div class="cta-grid wrap-pad cta-pad" style="position:relative;max-width:1200px;margin:0 auto;padding-top:88px;padding-bottom:88px;padding-left:32px;padding-right:32px;">
 
     <div class="reveal">
       <span class="eyebrow" style="color:var(--accent);display:inline-flex;align-items:center;gap:8px;"><i class="bolt" aria-hidden="true"></i>Let's build it</span>

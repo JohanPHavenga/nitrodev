@@ -35,8 +35,7 @@
   {{-- Bottom bar --}}
   <div style="max-width:1200px;margin:40px auto 0;padding:24px 32px 0;border-top:1px solid rgba(255,255,255,.08);font-size:13px;color:#6b8095;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;">
     <div style="display:flex;flex-direction:column;gap:4px;">
-      <span>© 2026 NitroDev. All rights reserved.</span>
-      <span style="color:#5a7088;font-size:12.5px;">NitroDev (Pty) Ltd</span>
+      <span>© 2026 NitroDev (Pty) Ltd. All rights reserved.</span>
     </div>
     <span>People-powered web, built in Cape Town.</span>
   </div>
